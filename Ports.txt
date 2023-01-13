@@ -1,4 +1,8 @@
 Services
 catalogAPI : 5011
 photoStock : 5012
+basketApi : 5013
+discounApi : 5014
+
+
 identityServer : 5001
