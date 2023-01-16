@@ -3,6 +3,10 @@ catalogAPI : 5011
 photoStock : 5012
 basketApi : 5013
 discounApi : 5014
+orderApi : 5015
+paymentApi : 5016
+
 
 
 identityServer : 5001
+gateway : 5000

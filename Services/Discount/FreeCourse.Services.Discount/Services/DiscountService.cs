@@ -28,7 +28,7 @@ namespace FreeCourse.Services.Discount.Services
         public async Task<Response<List<Models.Discount>>> GetAll()
         {
             IEnumerable<Models.Discount> discounts = await _dbConnection.QueryAsync<Models.Discount>("Select * from discount");
-            throw new NotImplementedException();
+            return Response<List<Models.Discount>>.Success(discounts.ToList(),200);
         }
 
         public async Task<Response<Models.Discount>> GetByCodeAndUserId(string code, string userId)

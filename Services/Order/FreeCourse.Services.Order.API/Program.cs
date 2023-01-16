@@ -1,8 +1,13 @@
-using FreeCourse.Services.Discount.Services;
+using FreeCourse.Services.Order.Application.Handlers;
+using FreeCourse.Services.Order.Application.Queries;
+using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,16 +16,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddHttpContextAccessor ();
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddMediatR(typeof(CreateOrderCommandHandler).Assembly);
+builder.Services.AddDbContext<OrderDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), configure =>
+    {
+        configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");
+    });
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Bearer", options =>
     {
         options.Authority = builder.Configuration["IdentityServerUrl"];
-        options.Audience = "resource_discount";
+        options.Audience = "resource_order";
         options.RequireHttpsMetadata = false;
     });
 

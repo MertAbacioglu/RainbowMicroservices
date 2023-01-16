@@ -12,9 +12,14 @@ namespace FreeCourse.IdentityServer
     public static class Config
     {
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]{
-        new ApiResource("resource_catalog"){Scopes={"catalog_fullpermission"}},
+        new ApiResource("resource_catalog"){Scopes={"catalog_fullpermission"}}, //resource_CAtalog için catalog_fullpermission iznini verdik
         new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}},
         new ApiResource("resource_basket"){Scopes={"basket_fullpermission"}},
+        new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
+        new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
+        new ApiResource("resource_payment"){Scopes={"payment_fullpermission"}},
+        new ApiResource("resource_geteway"){Scopes={"geteway_fullpermission"}},
+
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
 
         };
@@ -40,6 +45,10 @@ namespace FreeCourse.IdentityServer
                 new ApiScope("catalog_fullpermission","full access for catalog api"),
                 new ApiScope("photo_stock_fullpermission","full access for photo stock api"),
                 new ApiScope("basket_fullpermission","full access for basket api"),
+                new ApiScope("discount_fullpermission","full access for discount api"),
+                new ApiScope("order_fullpermission","full access for order api"),
+                new ApiScope("payment_fullpermission","full access for payment api"),
+                new ApiScope("geteway_fullpermission","full access for geteway api"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
             };
 
@@ -54,7 +63,7 @@ namespace FreeCourse.IdentityServer
                     ClientId="WebMvcClient",
                     ClientSecrets= {new Secret("secret".Sha256())},
                     AllowedGrantTypes= GrantTypes.ClientCredentials,
-                    AllowedScopes={ "catalog_fullpermission","photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                    AllowedScopes={ "catalog_fullpermission","photo_stock_fullpermission", "geteway_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
 
                 },
                  new Client
@@ -65,7 +74,7 @@ namespace FreeCourse.IdentityServer
                     AllowOfflineAccess=true,
                     ClientSecrets= {new Secret("secret".Sha256())},
                     AllowedGrantTypes= GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = { "basket_fullpermission", IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,IdentityServerConstants.LocalApi.ScopeName,"roles" },
+                    AllowedScopes = { "basket_fullpermission","discount_fullpermission", "order_fullpermission", "payment_fullpermission", "geteway_fullpermission", IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,IdentityServerConstants.LocalApi.ScopeName,"roles" },
                     AccessTokenLifetime=1*60*60,
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
