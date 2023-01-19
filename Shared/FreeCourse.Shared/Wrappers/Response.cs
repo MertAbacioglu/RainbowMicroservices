@@ -5,9 +5,9 @@ namespace FreeCourse.Shared.Wrappers
 {
     public class Response<T>
     {
-        public T Data { get; private set; }
+        public T Data { get; set; }
         [JsonIgnore]
-        public int StatusCode { get; private set; }
+        public int StatusCode { get; set; }
         [JsonIgnore]
         public bool IsSuccessful { get; set; }
         public List<string> Errors { get; set; }

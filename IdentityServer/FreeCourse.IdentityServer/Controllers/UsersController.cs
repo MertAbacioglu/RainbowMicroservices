@@ -48,7 +48,7 @@ namespace FreeCourse.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUser()
+        public async Task<IActionResult> GetUser()//delege araya girip token'i  header'a ekleyecek
         {
             Claim userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
 
